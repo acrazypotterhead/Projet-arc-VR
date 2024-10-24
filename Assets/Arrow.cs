@@ -63,7 +63,7 @@ public class Arrow : MonoBehaviour
     {
         if (Physics.Linecast(_lastPosition, tip.position, out RaycastHit hitInfo))
         {
-            if (!hitInfo.transform.gameObject.CompareTag("Body"))
+            if (!hitInfo.transform.gameObject.CompareTag("Body") && !hitInfo.transform.gameObject.CompareTag("Bow"))
             {
                 if (hitInfo.transform.TryGetComponent(out Rigidbody body))
                 {

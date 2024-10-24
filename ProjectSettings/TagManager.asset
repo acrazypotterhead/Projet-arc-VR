@@ -6,6 +6,7 @@ TagManager:
   tags:
   - bullet
   - Body
+  - Bow
   layers:
   - Default
   - TransparentFX
@@ -13,9 +14,9 @@ TagManager:
   - 
   - Water
   - UI
+  - Bow
   - 
-  - 
-  - 
+  - Body
   - 
   - 
   - 
