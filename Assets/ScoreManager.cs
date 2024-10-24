@@ -7,7 +7,11 @@ public class Score
     public string name;
     public int score;
 
-    public 
+    public Score(string name, int score)
+    {
+        this.name = name;
+        this.score = score;
+    }
 }
 
 public class ScoreManager : MonoBehaviour
