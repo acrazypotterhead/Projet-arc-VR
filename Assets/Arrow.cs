@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class Arrow : MonoBehaviour
@@ -12,9 +13,11 @@ public class Arrow : MonoBehaviour
     private Rigidbody _rigidBody;
     private bool _inAir = false;
     private Vector3 _lastPosition = Vector3.zero;
+    private ScoreManager _scoreManager;
 
     private void Awake()
     {
+        _scoreManager = GameObject.Find("Score Manager").GetComponent<ScoreManager>();
         _rigidBody = GetComponent<Rigidbody>();
         PullInteraction.PullActionReleased += Release;
         _arrowShot = false;
@@ -62,22 +65,6 @@ public class Arrow : MonoBehaviour
         }
     }
 
-    private void CheckCollision()
-    {
-        if (Physics.Raycast(_lastPosition, tip.position, out RaycastHit hitInfo))
-        {
-            if (!hitInfo.transform.gameObject.CompareTag("Body") && !hitInfo.transform.gameObject.CompareTag("Bow"))
-            {
-                if (hitInfo.transform.TryGetComponent(out Rigidbody body))
-                {
-                    _rigidBody.interpolation = RigidbodyInterpolation.Extrapolate;
-                    transform.parent = hitInfo.transform;
-                    body.AddForce(_rigidBody.velocity, ForceMode.Impulse);
-                }
-                Stop();
-            }
-        }
-    }
 
     private void OnTriggerEnter(Collider hitInfo)
     {
@@ -90,6 +77,10 @@ public class Arrow : MonoBehaviour
                 body.AddForce(_rigidBody.velocity, ForceMode.Impulse);
             }
             Stop();
+        }
+        if (hitInfo.transform.CompareTag("Target"))
+        {
+            _scoreManager.IncrementScore();
         }
     }
 
