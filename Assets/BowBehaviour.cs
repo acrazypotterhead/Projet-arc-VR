@@ -1,10 +1,11 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
-public class ArrowSpawner : MonoBehaviour
+public class BowBehaviour : MonoBehaviour
 {
     public GameObject arrow;
     public GameObject notch;
+    public float force = 20f;
 
     private XRGrabInteractable _bow;
     private bool _arrowHasBeenNotched = false;
@@ -48,10 +49,11 @@ public class ArrowSpawner : MonoBehaviour
     // Coroutine to delay the arrow spawn
     IEnumerator DelayedSpawn()
     {
-        yield return new WaitForSeconds(1f); // Delay for 1 second before spawning
+        yield return new WaitForSeconds(.5f); // Delay for .5 second before spawning
 
         // Instantiate arrow at the notch position
         _currentArrow = Instantiate(arrow, notch.transform.position, notch.transform.rotation);
+        arrow.GetComponent<Arrow>().speed = force;
         _currentArrow.transform.SetParent(notch.transform); // Attach arrow to the notch
     }
 }
