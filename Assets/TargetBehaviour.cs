@@ -7,9 +7,10 @@ public class TargetBehaviour : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject particule;
+    public ScoreManager scoreManager;
     void Start()
     {
-        
+        scoreManager = GameObject.Find("Score Manager").GetComponent<ScoreManager>();   
     }
 
     // Update is called once per frame
@@ -21,6 +22,7 @@ public class TargetBehaviour : MonoBehaviour
     {
         if (other.CompareTag("bullet"))
         {
+            scoreManager.IncrementScore();
             GameObject explosion= Instantiate(particule);
             explosion.transform.position = transform.position;
             Destroy(explosion,0.75f);

@@ -12,24 +12,37 @@ public class Score
         this.name = name;
         this.score = score;
     }
+
+    public Score()
+    {
+        this.name = "";
+        this.score = 0;
+    }
 }
 
 public class ScoreManager : MonoBehaviour
 {
-
+    public Score score;
+    public UIBehaviour UI;
 
 
     // Start is called before the first frame update
     public const string FILE_PATH = "save.json";
     void Start()
     {
-        
+        UI = GameObject.FindAnyObjectByType<UIBehaviour>();
+        score = new Score();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void IncrementScore() { 
+        score.score ++;
+        UI.UpdateScore(score.score);
     }
 
     public void saveScore(Score score) {
