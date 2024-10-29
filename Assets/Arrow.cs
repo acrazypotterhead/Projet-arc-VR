@@ -1,21 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class Arrow : MonoBehaviour
 {
-    public float speed = 10f;
+    public float speed;
     public Transform tip;
 
+    private bool _arrowShot = false;
     private Rigidbody _rigidBody;
     private bool _inAir = false;
     private Vector3 _lastPosition = Vector3.zero;
+    private ScoreManager _scoreManager;
 
     private void Awake()
     {
+        _scoreManager = GameObject.Find("Score Manager").GetComponent<ScoreManager>();
         _rigidBody = GetComponent<Rigidbody>();
         PullInteraction.PullActionReleased += Release;
-
+        _arrowShot = false;
         Stop();
     }
 
@@ -28,6 +33,7 @@ public class Arrow : MonoBehaviour
     {
         PullInteraction.PullActionReleased -= Release;
         _inAir = true;
+        _arrowShot = true;
         gameObject.transform.parent = null;
         SetPhysics(true);
 
@@ -54,25 +60,27 @@ public class Arrow : MonoBehaviour
     {
         if (_inAir)
         {
-            CheckCollision();
+            //CheckCollision();
             _lastPosition = tip.position;
         }
     }
 
-    private void CheckCollision()
+
+    private void OnTriggerEnter(Collider hitInfo)
     {
-        if (Physics.Linecast(_lastPosition, tip.position, out RaycastHit hitInfo))
+        if (!hitInfo.transform.gameObject.CompareTag("Body") && !hitInfo.transform.gameObject.CompareTag("Bow"))
         {
-            if (!hitInfo.transform.gameObject.CompareTag("Body") && !hitInfo.transform.gameObject.CompareTag("Bow"))
+            if (hitInfo.transform.TryGetComponent(out Rigidbody body))
             {
-                if (hitInfo.transform.TryGetComponent(out Rigidbody body))
-                {
-                    _rigidBody.interpolation = RigidbodyInterpolation.None;
-                    transform.parent = hitInfo.transform;
-                    body.AddForce(_rigidBody.velocity, ForceMode.Impulse);
-                }
-                Stop();
+                _rigidBody.interpolation = RigidbodyInterpolation.Extrapolate;
+                transform.parent = hitInfo.transform;
+                body.AddForce(_rigidBody.velocity, ForceMode.Impulse);
             }
+            Stop();
+        }
+        if (hitInfo.transform.CompareTag("Target"))
+        {
+            _scoreManager.IncrementScore();
         }
     }
 
@@ -80,6 +88,16 @@ public class Arrow : MonoBehaviour
     {
         _inAir = false;
         SetPhysics(false);
+        if (_arrowShot)
+        {
+            StartCoroutine(waitAndDestroy());
+        }
+    }
+
+    IEnumerator waitAndDestroy()
+    {
+        yield return new WaitForSeconds(5);
+        Destroy(gameObject);
     }
 
     private void SetPhysics(bool usePhysics)

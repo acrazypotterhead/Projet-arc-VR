@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2149365410213029644}
   m_Layer: 0
   m_Name: Cible
-  m_TagString: Untagged
+  m_TagString: Undefined
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -121,3 +121,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particule: {fileID: 2797852879850996111, guid: 05c9e4ce780570f40b6edb54b6e53fea, type: 3}
+  scoreManager: {fileID: 0}
