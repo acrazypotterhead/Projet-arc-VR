@@ -10,6 +10,7 @@ public class TargetBehaviour : MonoBehaviour
     public ScoreManager scoreManager;
     void Start()
     {
+        scoreManager = GameObject.FindObjectOfType<ScoreManager>();
     }
 
     // Update is called once per frame
@@ -22,6 +23,7 @@ public class TargetBehaviour : MonoBehaviour
         if (other.CompareTag("bullet"))
         {
             GameObject explosion= Instantiate(particule);
+            scoreManager.IncrementScore();
             explosion.transform.position = transform.position;
             Destroy(explosion,0.75f);
             Destroy(gameObject);
