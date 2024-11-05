@@ -10,6 +10,10 @@ public class MenuNavigation : MonoBehaviour
     public GameObject settingsPanel;
 
     public Button gameModeButton;
+    public Button weaponsButton;
+    public Button scoreboardButton;
+    public Button settingsButton;
+
     public Button difficultyBackButton;
     public Button weaponsBackButton;
     public Button scoreboardBackButton;
@@ -20,8 +24,10 @@ public class MenuNavigation : MonoBehaviour
 
     void Start()
     {
-        gameModeButton.onClick.AddListener(OpenDifficultyMenu);
-
+        gameModeButton.onClick.AddListener(() => OpenMenu(PanelType.Difficulty));
+        weaponsButton.onClick.AddListener(() => OpenMenu(PanelType.Weapons));
+        scoreboardButton.onClick.AddListener(() => OpenMenu(PanelType.Scoreboard));
+        settingsButton.onClick.AddListener(() => OpenMenu(PanelType.Settings));
         // Assign back button actions for each submenu
         difficultyBackButton.onClick.AddListener(() => BackToMainMenu(PanelType.Difficulty));
         weaponsBackButton.onClick.AddListener(() => BackToMainMenu(PanelType.Weapons));
@@ -29,10 +35,23 @@ public class MenuNavigation : MonoBehaviour
         settingsBackButton.onClick.AddListener(() => BackToMainMenu(PanelType.Settings));
     }
 
-    void OpenDifficultyMenu()
+    void OpenMenu(PanelType panel)
     {
         mainPanel.SetActive(false);
-        difficultyPanel.SetActive(true);
+        switch (panel) {
+            case PanelType.Difficulty:
+                difficultyPanel.SetActive(true);
+                break;
+            case PanelType.Weapons:
+                weaponsPanel.SetActive(true);
+                break;
+            case PanelType.Scoreboard:
+                scoreboardPanel.SetActive(true);
+                break;
+            case PanelType.Settings:
+                settingsPanel.SetActive(true);
+                break;
+        }
     }
 
     void BackToMainMenu(PanelType panel)
