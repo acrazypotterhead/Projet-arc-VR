@@ -20,7 +20,7 @@ public class TargetBehaviour : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("bullet"))
+        if (other.transform.gameObject.CompareTag("Bullet"))
         {
             GameObject explosion= Instantiate(particule);
             scoreManager.IncrementScore();

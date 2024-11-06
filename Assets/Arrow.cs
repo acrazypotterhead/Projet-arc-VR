@@ -68,7 +68,7 @@ public class Arrow : MonoBehaviour
 
     private void OnTriggerEnter(Collider hitInfo)
     {
-        if (!hitInfo.transform.gameObject.CompareTag("Body") && !hitInfo.transform.gameObject.CompareTag("Bow"))
+        if (!hitInfo.transform.gameObject.CompareTag("Body") && !hitInfo.transform.gameObject.CompareTag("Bow") && !hitInfo.transform.gameObject.CompareTag("Bullet"))
         {
             if (hitInfo.transform.TryGetComponent(out Rigidbody body))
             {
@@ -77,10 +77,6 @@ public class Arrow : MonoBehaviour
                 body.AddForce(_rigidBody.velocity, ForceMode.Impulse);
             }
             Stop();
-        }
-        if (hitInfo.transform.CompareTag("Target"))
-        {
-            _scoreManager.IncrementScore();
         }
     }
 

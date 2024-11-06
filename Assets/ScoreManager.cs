@@ -40,7 +40,6 @@ public class ScoreManager : MonoBehaviour
     public void IncrementScore()
     {
         currentScore.score++;
-        Debug.Log("score : " + currentScore.score);
         UI.UpdateScore(currentScore.score);
     }
 

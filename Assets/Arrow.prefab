@@ -49,7 +49,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 432dd2b7c2581c744a40ca43b1307c17, type: 3}
       propertyPath: m_TagString
-      value: bullet
+      value: Bullet
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 432dd2b7c2581c744a40ca43b1307c17, type: 3}
       propertyPath: m_LocalScale.x
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bf6d56f8a81738478e645ffa1a5b45d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 20
   tip: {fileID: 330780553262812489}
 --- !u!65 &2946788484345191413
 BoxCollider:
