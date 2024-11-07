@@ -10,14 +10,19 @@ public class GameSessionManager : MonoBehaviour
     public static string Pseudo { get; set; }
 
     private bool isSessionActive = false;
+    private UIBehaviour uIBehaviour;
     private float sessionTimer = 60f;  // Default session duration for timed modes
     private Coroutine sessionCoroutine;
+    private ScoreManager scoreManager;
 
-    private void Awake()
+    private TargetSpawnerBehaviour targetSpawner;
+
+    public void Start()
     {
-        DontDestroyOnLoad(gameObject);
+        targetSpawner = GameObject.FindObjectOfType<TargetSpawnerBehaviour>();
+        uIBehaviour = GameObject.FindObjectOfType<UIBehaviour>();
+        scoreManager = GameObject.FindObjectOfType<ScoreManager>();
     }
-
 
     public static void LoadScene()
     {
@@ -35,7 +40,11 @@ public class GameSessionManager : MonoBehaviour
 
     public void StartSession()
     {
+        scoreManager.currentScore.score = 0;
+        uIBehaviour.UpdateScore(0);
         isSessionActive = true;
+        targetSpawner.StartSpawning();
+        uIBehaviour.EnableStartSessionButton(false);
 
         if (SelectedDifficulty == "Training")
         {
@@ -57,6 +66,7 @@ public class GameSessionManager : MonoBehaviour
 
         while (remainingTime > 0)
         {
+            uIBehaviour.UpdateTimer((int) remainingTime);
             remainingTime -= Time.deltaTime;
             yield return null;
         }
@@ -66,6 +76,9 @@ public class GameSessionManager : MonoBehaviour
 
     public void EndSession()
     {
+        targetSpawner.StopSpawning();
+        uIBehaviour.EnableStartSessionButton(true);
+
         if (!isSessionActive) return;
 
         isSessionActive = false;
@@ -87,6 +100,7 @@ public class GameSessionManager : MonoBehaviour
             EndSession();
         }
     }
+
     public static string ToString()
     {
         return string.Format("bow: {0}, arrow: {1}, difficulty: {2}, pseudo: {3}", SelectedBow, SelectedArrow, SelectedDifficulty, Pseudo);

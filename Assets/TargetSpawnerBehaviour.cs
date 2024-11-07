@@ -23,7 +23,6 @@ public class TargetSpawnerBehaviour : MonoBehaviour
     void Start()
     {
         StartCoroutine(nameof(SpawnCorountine));
-        StartSpawning();
     }
 
     // Update is called once per frame

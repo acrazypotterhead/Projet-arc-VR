@@ -17,7 +17,7 @@ public class Arrow : MonoBehaviour
 
     private void Awake()
     {
-        _scoreManager = GameObject.Find("Score Manager").GetComponent<ScoreManager>();
+        _scoreManager = GameObject.FindObjectOfType<ScoreManager>();
         _rigidBody = GetComponent<Rigidbody>();
         PullInteraction.PullActionReleased += Release;
         _arrowShot = false;
