@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +11,7 @@ public class ScoreDisplay : MonoBehaviour
 
     void Start()
     {
-        gameObject.SetActive(false); // Initially hide until needed
+
     }
 
     void OnEnable()
@@ -29,12 +30,13 @@ public class ScoreDisplay : MonoBehaviour
         foreach (Score score in scores)
         {
             GameObject entry = Instantiate(scoreEntryPrefab, contentContainer);
-            Text[] texts = entry.GetComponentsInChildren<Text>();
+            TextMeshProUGUI[] texts = entry.GetComponentsInChildren<TextMeshProUGUI>();
 
             if (texts.Length >= 2)
             {
                 texts[0].text = score.name;   // Assign player name
                 texts[1].text = score.score.ToString(); // Assign player score
+                texts[2].text = score.difficulty;
             }
         }
     }
@@ -43,7 +45,8 @@ public class ScoreDisplay : MonoBehaviour
     {
         foreach (Transform child in contentContainer)
         {
-            Destroy(child.gameObject);
+            if(child.name != "Scoreboard Header")
+                Destroy(child.gameObject);
         }
     }
 }

@@ -9,6 +9,8 @@ public class Score
     public string name;
     [SerializeField]
     public int score;
+    [SerializeField]
+    public string difficulty;
 
     
     public Score(string name, int score)
@@ -21,6 +23,7 @@ public class Score
     {
         this.name = "";
         this.score = 0;
+        this.difficulty = "";
     }
 }
 
@@ -58,6 +61,7 @@ public class ScoreManager : MonoBehaviour
             }
 
             ScoreList scoreList = JsonUtility.FromJson<ScoreList>(json);
+            Debug.Log(scoreList.scores.Count);
             return scoreList?.scores ?? new List<Score>();
         }
         else
