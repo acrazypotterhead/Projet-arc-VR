@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIBehaviour : MonoBehaviour
@@ -34,6 +35,16 @@ public class UIBehaviour : MonoBehaviour
     public void EnableStartSessionButton(bool enable)
     {
         transform.Find("Start Session Button").gameObject.SetActive(enable);
+    }
+
+    public void EnableMainMenuButton(bool enable)
+    {
+        transform.Find("Main Menu Button").gameObject.SetActive(enable);
+    }
+
+    public void MainMenuButtonOnClick()
+    {
+        SceneManager.LoadScene("MainMenuScene");
     }
 
     // Update is called once per frame

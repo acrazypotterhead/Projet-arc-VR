@@ -13290,6 +13290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 545693302}
+  timerText: {fileID: 0}
   scoreManager: {fileID: 0}
 --- !u!1 &1098442017
 GameObject:

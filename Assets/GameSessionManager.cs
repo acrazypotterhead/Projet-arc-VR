@@ -45,6 +45,7 @@ public class GameSessionManager : MonoBehaviour
         isSessionActive = true;
         targetSpawner.StartSpawning();
         uIBehaviour.EnableStartSessionButton(false);
+        uIBehaviour.EnableMainMenuButton(false);
 
         if (SelectedDifficulty == "Training")
         {
@@ -78,6 +79,7 @@ public class GameSessionManager : MonoBehaviour
     {
         targetSpawner.StopSpawning();
         uIBehaviour.EnableStartSessionButton(true);
+        uIBehaviour.EnableMainMenuButton(true);
 
         if (!isSessionActive) return;
 
@@ -89,6 +91,9 @@ public class GameSessionManager : MonoBehaviour
             sessionCoroutine = null;
         }
 
+        scoreManager.currentScore.name = Pseudo;
+        scoreManager.currentScore.difficulty = SelectedDifficulty;
+        scoreManager.AddScore(scoreManager.currentScore);
         Debug.Log("Session ended.");
         // Additional code to stop spawning targets, save scores, and handle session end
     }
