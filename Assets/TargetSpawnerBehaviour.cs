@@ -1,11 +1,12 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TargetSpawnerBehaviour : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField]
-    private float MAX_HEIGHT = 2f;
+    private float MAX_HEIGHT = 3f;
     [SerializeField]
     private float MAX_HORIZONTAL_POS = 10f;
     [SerializeField]
@@ -62,8 +63,17 @@ public class TargetSpawnerBehaviour : MonoBehaviour
         GameObject target = Instantiate(targetPrefab);
         target.transform.position = new Vector3(Random.Range(
             -MAX_HORIZONTAL_POS, MAX_HORIZONTAL_POS),
-            Random.Range(1, MAX_HEIGHT),
+            Random.Range(1.5f, MAX_HEIGHT),
             Random.Range(-MAX_HORIZONTAL_POS, MAX_HORIZONTAL_POS)
             );
+    }
+
+    public void KillAllTargets()
+    {
+        TargetBehaviour[] targets = GameObject.FindObjectsOfType<TargetBehaviour>();
+        foreach (var item in targets)
+        {
+            GameObject.Destroy(item.gameObject);
+        }
     }
 }

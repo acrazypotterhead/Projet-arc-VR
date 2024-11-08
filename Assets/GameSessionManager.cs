@@ -14,19 +14,52 @@ public class GameSessionManager : MonoBehaviour
     private float sessionTimer = 60f;  // Default session duration for timed modes
     private Coroutine sessionCoroutine;
     private ScoreManager scoreManager;
-
     private TargetSpawnerBehaviour targetSpawner;
+
+    public string context;
+    public GameObject woodenBow;
+    public GameObject carbonFiberBow;
+    public GameObject woodenArrow;
+    public GameObject aluminumArrow;
+
+
 
     public void Start()
     {
         targetSpawner = GameObject.FindObjectOfType<TargetSpawnerBehaviour>();
         uIBehaviour = GameObject.FindObjectOfType<UIBehaviour>();
         scoreManager = GameObject.FindObjectOfType<ScoreManager>();
+        GameObject bow;
+
+        if (context != "Menu")
+        {
+            switch (SelectedBow)
+            {
+                case "WoodenBowButton":
+                    bow = GameObject.Instantiate(woodenBow);
+                    break;
+                case "CarbonFiberBowButton":
+                    bow = GameObject.Instantiate(carbonFiberBow);
+                    break;
+                default:
+                    bow = GameObject.Instantiate(woodenBow);
+                    break;
+            }
+
+            switch (SelectedArrow)
+            {
+                case "WoodenArrowButton":
+                    bow.GetComponent<BowBehaviour>().arrow = woodenArrow;
+                    break;
+                case "AluminumArrowButton":
+                    bow.GetComponent<BowBehaviour>().arrow = aluminumArrow;
+                    break;
+            }
+        }
     }
 
     public static void LoadScene()
     {
-        Debug.Log(ToString());
         if (SelectedDifficulty == "Training")
             SceneManager.LoadScene("TrainingScene");
         else if (SelectedDifficulty == "Easy")
@@ -78,6 +111,7 @@ public class GameSessionManager : MonoBehaviour
     public void EndSession()
     {
         targetSpawner.StopSpawning();
+        targetSpawner.KillAllTargets();
         uIBehaviour.EnableStartSessionButton(true);
         uIBehaviour.EnableMainMenuButton(true);
 
@@ -105,11 +139,4 @@ public class GameSessionManager : MonoBehaviour
             EndSession();
         }
     }
-
-    public static string ToString()
-    {
-        return string.Format("bow: {0}, arrow: {1}, difficulty: {2}, pseudo: {3}", SelectedBow, SelectedArrow, SelectedDifficulty, Pseudo);
-    }
-
-
 }
