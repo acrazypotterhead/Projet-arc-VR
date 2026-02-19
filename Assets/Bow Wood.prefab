@@ -904,7 +904,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrow: {fileID: 1074428781785340441, guid: 73b46aa03531fdf4889f992afb0a56e7, type: 3}
   notch: {fileID: 9017575333497194603}
-  force: 10
+  force: 17
 --- !u!1 &4502048607117103048
 GameObject:
   m_ObjectHideFlags: 0
